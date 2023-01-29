@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TextProcess.Backend.Domain.Entities;
 using TextProcess.Backend.Domain.Factory;
+using TextProcess.Backend.Domain.Statistics;
 
 namespace TextProcess.Backend.Domain.Services
 {
@@ -27,13 +28,13 @@ namespace TextProcess.Backend.Domain.Services
         }
 
         /// <summary>
-        /// The 
+        /// The GetStatistics method.
         /// </summary>
         /// <param name="textToAnalize">The text to analize.</param>
         /// <returns>The statistics.</returns>
         public TextStatisticsEntity GetStatistics(string textToAnalize)
         {
-            return new TextStatisticsEntity(0, 0, 0);
+            return StatisticsUtils.GetStatisticsOfText(textToAnalize);
         }
     }
 }

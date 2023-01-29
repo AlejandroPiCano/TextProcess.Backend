@@ -47,13 +47,13 @@ namespace TextProcess.Backend.Application.Services
         /// <param name="textToAnalize">The text to analize.</param>
         /// <returns>The TextStatisticsDTO.</returns>
         public TextStatisticsDTO GetStatistics(string textToAnalize)
-        {
-            TextStatisticsDTO defaultResult = new TextStatisticsDTO(0, 0, 0);
-
+        {           
             if (string.IsNullOrEmpty(textToAnalize))
             {
-                return defaultResult;
+                throw new ArgumentException($"Argument {nameof(textToAnalize)} is null or empty");
             }
+
+            TextStatisticsDTO defaultResult = new TextStatisticsDTO(0, 0, 0);
             var textStatistics = orderProcessDomainService.GetStatistics(textToAnalize);
 
             return textStatistics != null ? new TextStatisticsDTO(textStatistics.HyphensQuantity, textStatistics.WordQuantity, textStatistics.SpacesQuantity) : defaultResult;

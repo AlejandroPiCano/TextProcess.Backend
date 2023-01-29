@@ -40,15 +40,41 @@ namespace TextProcess.Backend.API.Controllers
             }
         }
 
-        // GET: api/TextProcessController/Order
-        [HttpGet("Order")]
+        // POST: api/TextProcessController/Order?orderOption={orderOption}
+        [HttpPost("Order")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<IEnumerable<string>> Get([Required, FromQuery] string textToOrder, [Required, FromQuery] OrderOptionDTO orderOption)
+        public ActionResult<IEnumerable<string>> Post([Required, FromBody] string textToOrder, [Required] OrderOptionDTO orderOption)
         {
             try
             {
                 return Ok(orderProcessApplicationService.GetOrderedText(textToOrder, orderOption));
+            }
+            catch (ArgumentException argumentException)
+            {
+                logger.LogError(argumentException.Message);
+
+                return BadRequest(argumentException.Message);
+            }
+            catch (Exception exception)
+            {
+                logger.LogError(exception.Message);
+
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
+        }
+
+        // Post: api/TextProcessController/Analize
+        [HttpPost("Analize")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<IEnumerable<string>> Post([Required, FromBody] string textToAnalize)
+        {
+            try
+            {
+                return Ok(orderProcessApplicationService.GetStatistics(textToAnalize));
             }
             catch (ArgumentException argumentException)
             {
