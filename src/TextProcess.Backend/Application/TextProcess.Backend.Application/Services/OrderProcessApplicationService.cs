@@ -35,7 +35,7 @@ namespace TextProcess.Backend.Application.Services
         {
             if (string.IsNullOrEmpty(textToOrder))
             {
-                return Enumerable.Empty<string>();
+                throw new ArgumentException($"Argument {nameof(textToOrder)} is null or empty");
             }
 
             return orderProcessDomainService.GetOrderedText(textToOrder, (OrderOptionEntity)orderOption);

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.ComponentModel.DataAnnotations;
 using TextProcess.Backend.Application.DTOs;
 using TextProcess.Backend.Application.Services;
 
@@ -10,7 +11,6 @@ namespace TextProcess.Backend.API.Controllers
     [ApiController]
     public class TextProcessController : ControllerBase
     {
-        private const int INTERNAL_SERVER_ERROR = 500;
         private readonly IOrderOptionsService orderOptionsService;
         private readonly IOrderProcessApplicationService orderProcessApplicationService;
         private readonly ILogger<TextProcessController> logger;
@@ -32,11 +32,35 @@ namespace TextProcess.Backend.API.Controllers
             {
                 return Ok(await orderOptionsService.GetOrderOptions());
             }
-            catch (System.Exception e)
+            catch (System.Exception exception)
             {
-                logger.LogInformation(e.Message);
+                logger.LogInformation(exception.Message);
 
-                return StatusCode(INTERNAL_SERVER_ERROR, e.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
+        }
+
+        // GET: api/TextProcessController/Order
+        [HttpGet("Order")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public ActionResult<IEnumerable<string>> Get([Required, FromQuery] string textToOrder, [Required, FromQuery] OrderOptionDTO orderOption)
+        {
+            try
+            {
+                return Ok(orderProcessApplicationService.GetOrderedText(textToOrder, orderOption));
+            }
+            catch (ArgumentException argumentException)
+            {
+                logger.LogError(argumentException.Message);
+
+                return BadRequest(argumentException.Message);
+            }
+            catch (Exception exception)
+            {
+                logger.LogError(exception.Message);
+
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
     }
