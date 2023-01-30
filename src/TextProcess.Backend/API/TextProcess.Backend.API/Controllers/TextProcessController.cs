@@ -70,7 +70,7 @@ namespace TextProcess.Backend.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public ActionResult<IEnumerable<string>> Post([Required, FromBody] string textToAnalize)
+        public ActionResult<TextStatisticsDTO> Post([Required, FromBody] string textToAnalize)
         {
             try
             {

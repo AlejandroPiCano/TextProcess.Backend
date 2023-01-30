@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="6.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Domain\TextProcess.Backend.Domain.Entities\TextProcess.Backend.Domain.Entities.csproj" />
     <ProjectReference Include="..\..\Domain\TextProcess.Backend.Domain\TextProcess.Backend.Domain.csproj" />
     <ProjectReference Include="..\TextProcess.Backend.Application.DTOs\TextProcess.Backend.Application.DTOs.csproj" />
