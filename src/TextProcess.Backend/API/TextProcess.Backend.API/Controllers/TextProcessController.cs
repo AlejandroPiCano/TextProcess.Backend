@@ -6,7 +6,7 @@ using TextProcess.Backend.Application.DTOs;
 using TextProcess.Backend.Application.Services;
 
 namespace TextProcess.Backend.API.Controllers
-{
+{    
     [Route("api/[controller]")]
     [ApiController]
     public class TextProcessController : ControllerBase

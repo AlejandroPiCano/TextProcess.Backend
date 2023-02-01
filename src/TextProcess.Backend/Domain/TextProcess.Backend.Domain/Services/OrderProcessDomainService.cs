@@ -22,7 +22,7 @@ namespace TextProcess.Backend.Domain.Services
         /// <returns>The ordered words.</returns>
         public IEnumerable<string> GetOrderedText(string textToOrder, OrderOptionEntity orderOption)
         {            
-            var command = CommandOrderFactory.GetCommand(textToOrder, orderOption);
+            var command = CommandOrderFactoryManager.GetCommandOrder(textToOrder, orderOption);
 
             return command.Sort();
         }
