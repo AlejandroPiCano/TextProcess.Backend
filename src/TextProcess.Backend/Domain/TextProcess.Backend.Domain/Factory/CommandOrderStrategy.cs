@@ -12,7 +12,7 @@ namespace TextProcess.Backend.Domain.Factory
     /// <summary>
     /// The command order factory class.
     /// </summary>
-    internal static class CommandOrderFactoryManager
+    internal static class CommandOrderStrategy
     {
         private static Type defaultCommand = typeof(NoneOrderCommandFactory);
 
